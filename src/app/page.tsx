@@ -4,14 +4,11 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-import { Layout, Row, Col, Form, Input, Button, Typography, Spin, Space } from 'antd';
-import { Icon } from '@iconify/react';
-import { Hero } from '@/components/Hero';
+import { Layout, Button, Typography, Spin, Space } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
 
-
 const { Header, Content } = Layout;
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 export default function Home() {
   const { user, isLoading } = useUser();
@@ -43,10 +40,6 @@ export default function Home() {
     );
   }
 
-  const onFinish = (values: any) => {
-    router.push('/api/auth/login');
-  };
-
   if (isLoading) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#141414' }}>
@@ -54,7 +47,6 @@ export default function Home() {
       </div>
     );
   }
-
 
   return (
     <Layout style={{ minHeight: '100vh', background: '#141414' }}>

@@ -14,7 +14,7 @@ export default function LoginPage() {
   
   if (error) return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="text-red-600">Hata: {error.message}</div>
+      <div className="text-red-600">Error: {error.message}</div>
     </div>
   );
 
@@ -23,18 +23,18 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {user ? 'Hoş Geldiniz!' : 'Giriş Yapın'}
+            {user ? 'Welcome!' : 'Log In'}
           </h2>
         </div>
         <div className="mt-8 space-y-6">
           {user ? (
             <div className="text-center">
-              <p className="text-gray-600">Merhaba, {user.name}!</p>
+              <p className="text-gray-600">Hello, {user.name}!</p>
               <Link
                 href="/api/auth/logout"
                 className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
               >
-                Çıkış Yap
+                Log Out
               </Link>
             </div>
           ) : (
@@ -42,7 +42,7 @@ export default function LoginPage() {
               href="/api/auth/login"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Auth0 ile Giriş Yap
+              Log In with Auth0
             </Link>
           )}
         </div>

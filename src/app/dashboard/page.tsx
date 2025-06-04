@@ -16,7 +16,7 @@ import {
 } from '@ant-design/icons';
 
 const { Header, Content } = Layout;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 export default function Dashboard() {
   const { user, isLoading } = useUser();
