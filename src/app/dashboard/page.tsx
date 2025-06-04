@@ -9,6 +9,7 @@ import {
   LogoutOutlined,
   DashboardOutlined,
   UserOutlined,
+  SettingOutlined,
   WarningOutlined,
   DollarOutlined,
   TeamOutlined,
@@ -65,6 +66,11 @@ export default function Dashboard() {
             <Menu.Item key="profile" icon={<UserOutlined />}>
               <Link href="/profile">Profile</Link>
             </Menu.Item>
+            {user.role === 'admin' && (
+              <Menu.Item key="admin" icon={<SettingOutlined />}>
+                <Link href="/admin">Admin</Link>
+              </Menu.Item>
+            )}
           </Menu>
         </div>
         <Button

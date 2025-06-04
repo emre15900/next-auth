@@ -64,3 +64,13 @@
 .ant-descriptions-item-content span {
   color: #ffffff !important;
 }
+
+
+.ant-result-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.ant-result-subtitle {
+  color: #dddddd !important;
+}
