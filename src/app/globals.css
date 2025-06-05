@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+.ant-layout {
+  background: #141414 !important;
+}
+
+.ant-card {
+  background: #1f1f1f !important;
+  border: 1px solid #303030 !important;
+}
+
+.ant-menu-dark {
+  background: transparent !important;
+}
+
+.ant-descriptions-bordered .ant-descriptions-item-label {
+  background-color: #1f1f1f !important;
+}
+
+.ant-descriptions-bordered .ant-descriptions-item-content {
+  background-color: #141414 !important;
+}
+
+.ant-menu {
+  border-bottom: none !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #1668dc !important;
+}
+
+.ant-statistic-title {
+  color: #ffffff !important;
+}
+
+.ant-typography {
+  color: #dddddd !important;
+}
+
+.ant-card-head-title {
+  color: #ffffff !important;
+}
+
+.ant-descriptions-item-label span {
+  color: #ffffff !important;
+}
+
+.ant-descriptions-item-content span {
+  color: #ffffff !important;
+}
+
+.ant-result-title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.ant-result-subtitle {
+  color: #dddddd !important;
+}
+
+.ant-table-wrapper table {
+  border-bottom: 1px solid #ffffff !important;
+  border-radius: 8px !important;
+}
+
+.anticon.anticon-search {
+  color: #ffffff !important;
+}
+
+.ant-table-filter-column span svg {
+  color: #ffffff !important;
+}
+
+.ant-empty-description {
+  color: #dddddd !important;
+}
