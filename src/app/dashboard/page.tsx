@@ -23,6 +23,9 @@ export default function Dashboard() {
   const { user, isLoading } = useUser();
   const router = useRouter();
 
+  const roles = (user?.['https://kayraexport.com/roles'] as string[]) || [];
+  const isAdmin = Array.isArray(roles) && roles.includes('admin');
+
   useEffect(() => {
     if (!user && !isLoading) {
       router.push('/');
@@ -66,7 +69,7 @@ export default function Dashboard() {
             <Menu.Item key="profile" icon={<UserOutlined />}>
               <Link href="/profile">Profile</Link>
             </Menu.Item>
-            {user.role === 'admin' && (
+            {isAdmin && (
               <Menu.Item key="admin" icon={<SettingOutlined />}>
                 <Link href="/admin">Admin</Link>
               </Menu.Item>

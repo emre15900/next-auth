@@ -69,28 +69,27 @@ export default function Profile() {
         </Button>
       </Header>
 
-      <Content style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+      <Content style={{ padding: '24px', maxWidth: '800px', margin: '0 auto' }}>
         <Card>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
-            <Avatar 
-              size={52} 
-              src={user.picture} 
-              icon={<UserOutlined />}
-              style={{ marginRight: '16px' }}
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <Avatar
+              size={100}
+              src={user.picture}
+              style={{ marginBottom: '16px' }}
             />
-            <div>
-              <Title level={4} style={{ margin: 0 }}>Profile Information</Title>
-              <Text type="secondary">
-                Your personal information and account details.
-              </Text>
-            </div>
+            <Title level={2}>{user.name}</Title>
           </div>
-          <Descriptions column={1} bordered>
-            <Descriptions.Item label="Full Name">{user.name}</Descriptions.Item>
-            <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
-            <Descriptions.Item label="User ID">{user.sub}</Descriptions.Item>
-            <Descriptions.Item label="Last Updated">
-              {new Date(user.updated_at || '').toLocaleDateString('tr-TR')}
+          <Descriptions bordered>
+            <Descriptions.Item label="Email" span={3}>{user.email}</Descriptions.Item>
+            <Descriptions.Item label="Nickname" span={3}>{user.nickname}</Descriptions.Item>
+            <Descriptions.Item label="Roles" span={3}>
+              {(user['https://kayraexport.com/roles'] as string[] || []).join(', ') || 'No roles assigned'}
+            </Descriptions.Item>
+            <Descriptions.Item label="Email Verified" span={3}>
+              {user.email_verified ? 'Yes' : 'No'}
+            </Descriptions.Item>
+            <Descriptions.Item label="Last Updated" span={3}>
+              {user.updated_at ? new Date(user.updated_at).toLocaleString() : 'Not available'}
             </Descriptions.Item>
           </Descriptions>
         </Card>

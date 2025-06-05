@@ -4,7 +4,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Layout, Menu, Button, Card, Spin, Typography, Table } from 'antd';
+import { Layout, Menu, Button, Card, Spin, Typography, Table, message } from 'antd';
 import {
   LogoutOutlined,
   DashboardOutlined,
@@ -26,6 +26,7 @@ export default function AdminPage() {
   const router = useRouter();
 
   const roles = (user?.['https://kayraexport.com/roles'] as string[]) || [];
+  const isAdmin = Array.isArray(roles) && roles.includes('admin');
 
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,30 +34,40 @@ export default function AdminPage() {
   useEffect(() => {
     if (!isLoading) {
       if (!user) {
-        router.push('/');
-      } else if (!roles.includes('admin')) {
+        router.push('/login');
+      } else if (!isAdmin) {
+        console.log('User roles:', roles);
         router.push('/unauthorized');
       }
     }
-  }, [user, isLoading, router]);
+  }, [user, isLoading, router, roles, isAdmin]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        if (!isAdmin) {
+          return;
+        }
+
+        setLoading(true);
         const res = await fetch('/api/users');
+        if (!res.ok) {
+          throw new Error('Failed to fetch users');
+        }
         const data = await res.json();
         setUserList(data.users);
       } catch (err) {
         console.error('Failed to fetch users:', err);
+        message.error('Failed to load users. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
-    if (roles.includes('admin')) {
+    if (isAdmin) {
       fetchUsers();
     }
-  }, [roles]);
+  }, [isAdmin]);
 
   if (isLoading || loading) {
     return (
