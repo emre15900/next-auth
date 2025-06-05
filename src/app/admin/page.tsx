@@ -4,22 +4,16 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Layout, Menu, Button, Card, Spin, Typography, Table, message } from 'antd';
+import { Layout, Button, Card, Spin, Typography, Table, message, Tag, Input, Space } from 'antd';
 import {
   LogoutOutlined,
-  DashboardOutlined,
-  UserOutlined,
-  SettingOutlined
+  SearchOutlined
 } from '@ant-design/icons';
+import type { ColumnsType } from 'antd/es/table';
+import React from 'react';
 
 const { Header, Content } = Layout;
 const { Text, Title } = Typography;
-
-const columns = [
-  { title: 'Name', dataIndex: 'name', key: 'name' },
-  { title: 'Email', dataIndex: 'email', key: 'email' },
-  { title: 'Role', dataIndex: 'role', key: 'role' },
-];
 
 export default function AdminPage() {
   const { user, isLoading } = useUser();
@@ -30,6 +24,110 @@ export default function AdminPage() {
 
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = React.useRef<any>(null);
+
+  const getColumnSearchProps = (dataIndex: string) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+    ),
+    onFilter: (value: boolean | import('react').Key, record: any) => {
+      if (typeof value !== 'string' && typeof value !== 'number') return false;
+      return record[dataIndex]
+        ? record[dataIndex].toString().toLowerCase().includes(value.toString().toLowerCase())
+        : false;
+    },
+    onFilterDropdownOpenChange: (visible: boolean) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text: string) =>
+      searchedColumn === dataIndex ? (
+        <span style={{ background: '#1677ff22', padding: 2, borderRadius: 4 }}>{text}</span>
+      ) : (
+        text
+      ),
+  });
+
+  const handleSearch = (selectedKeys: string[], confirm: any, dataIndex: string) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: any) => {
+    clearFilters();
+    setSearchText('');
+  };
+
+  const columns: ColumnsType<any> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      ...getColumnSearchProps('name'),
+      ellipsis: true,
+      width: 180,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      sorter: (a, b) => a.email.localeCompare(b.email),
+      ...getColumnSearchProps('email'),
+      ellipsis: true,
+      width: 220,
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+      filters: [
+        { text: 'Admin', value: 'admin' },
+        { text: 'User', value: 'user' },
+      ],
+      onFilter: (value: boolean | import('react').Key, record: any) => {
+        if (typeof value !== 'string' && typeof value !== 'number') return false;
+        return record.role === value.toString();
+      },
+      render: (role: string) => (
+        <Tag color={role === 'admin' ? 'geekblue' : 'green'} style={{ fontWeight: 500, fontSize: 14, borderRadius: 8, padding: '2px 12px' }}>
+          {role.charAt(0).toUpperCase() + role.slice(1)}
+        </Tag>
+      ),
+      width: 120,
+    },
+  ];
 
   useEffect(() => {
     if (!isLoading) {
@@ -179,13 +277,16 @@ export default function AdminPage() {
           <Table
             dataSource={userList}
             columns={columns}
-            pagination={{ pageSize: 10 }}
+            pagination={{ pageSize: 10, showSizeChanger: true, pageSizeOptions: [5, 10, 20, 50], showQuickJumper: true }}
             rowKey="id"
             style={{ background: 'transparent', color: '#fff', borderRadius: 12 }}
             bordered
             size="middle"
             tableLayout="auto"
             rowClassName={() => 'dark-row'}
+            scroll={{ x: 600, y: 400 }}
+            sticky
+            showHeader
             components={{
               header: {
                 cell: (props: any) => (
@@ -211,13 +312,12 @@ export default function AdminPage() {
                       background: 'rgba(24,24,28,0.95)',
                       color: '#fff',
                       borderBottom: '1px solid #23232b',
-                      fontSize: 15,
+                      fontSize: 15
                     }}
                   />
                 )
               }
             }}
-
           />
         </Card>
       </Content>

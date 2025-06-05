@@ -78,3 +78,15 @@
   border-bottom: 1px solid #ffffff !important;
   border-radius: 8px !important;
 }
+
+.anticon.anticon-search {
+  color: #ffffff !important;
+}
+
+.ant-table-filter-column span svg {
+  color: #ffffff !important;
+}
+
+.ant-empty-description {
+  color: #dddddd !important;
+}
