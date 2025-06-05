@@ -65,7 +65,6 @@
   color: #ffffff !important;
 }
 
-
 .ant-result-title {
   color: #ffffff !important;
   font-weight: 600 !important;
@@ -73,4 +72,9 @@
 
 .ant-result-subtitle {
   color: #dddddd !important;
+}
+
+.ant-table-wrapper table {
+  border-bottom: 1px solid #ffffff !important;
+  border-radius: 8px !important;
 }

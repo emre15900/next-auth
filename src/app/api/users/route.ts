@@ -5,7 +5,7 @@ import { getManagementToken } from '@/lib/auth0-management';
 export async function GET(req: Request) {
   try {
     const session = await getSession();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
@@ -14,7 +14,6 @@ export async function GET(req: Request) {
     const isAdmin = Array.isArray(roles) && roles.includes('admin');
 
     if (!isAdmin) {
-      console.log('Unauthorized access attempt - User roles:', roles);
       return NextResponse.json({ error: 'Unauthorized - Admin access required' }, { status: 403 });
     }
 
@@ -55,7 +54,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
   try {
     const session = await getSession();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
@@ -64,7 +63,6 @@ export async function PUT(req: Request) {
     const isAdmin = Array.isArray(roles) && roles.includes('admin');
 
     if (!isAdmin) {
-      console.log('Unauthorized access attempt - User roles:', roles);
       return NextResponse.json({ error: 'Unauthorized - Admin access required' }, { status: 403 });
     }
 

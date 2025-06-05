@@ -46,47 +46,93 @@ export default function Dashboard() {
 
   return (
     <Layout style={{ minHeight: '100vh', background: '#141414' }}>
-      <Header style={{ background: '#1f1f1f', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Header style={{ background: '#18181c', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
           <Text style={{
-            fontSize: '20px',
-            fontWeight: 'bold',
+            fontSize: '22px',
+            fontWeight: 700,
             background: 'linear-gradient(to right, #1677ff, #7A29DC)',
             WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+            WebkitTextFillColor: 'transparent',
+            marginRight: 40,
+            letterSpacing: 1
           }}>
-            Admin Panel
+            Kayra Export
           </Text>
-          <Menu
-            mode="horizontal"
-            theme="dark"
-            style={{ background: 'transparent', marginLeft: '24px' }}
-            selectedKeys={['dashboard']}
-          >
-            <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
-              <Link href="/dashboard">Dashboard</Link>
-            </Menu.Item>
-            <Menu.Item key="profile" icon={<UserOutlined />}>
-              <Link href="/profile">Profile</Link>
-            </Menu.Item>
+          <nav style={{ display: 'flex', gap: 12, flex: 1 }}>
+            <Link href="/dashboard" legacyBehavior>
+              <a style={{
+                color: '#fff',
+                fontWeight: 600,
+                padding: '8px 28px',
+                borderRadius: 12,
+                background: 'linear-gradient(90deg, #1677ff 0%, #7A29DC 100%)',
+                boxShadow: '0 2px 8px rgba(22,119,255,0.10)',
+                textDecoration: 'none',
+                fontSize: 16,
+                display: 'flex',
+                alignItems: 'center',
+                height: 44,
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'box-shadow 0.2s'
+              }}
+                onMouseOver={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(22,119,255,0.18)'}
+                onMouseOut={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(22,119,255,0.10)'}
+              >Dashboard</a>
+            </Link>
+            <Link href="/profile" legacyBehavior>
+              <a style={{
+                color: '#fff',
+                fontWeight: 500,
+                padding: '8px 28px',
+                borderRadius: 12,
+                background: 'rgba(36,36,36,0.7)',
+                transition: 'background 0.2s, color 0.2s',
+                textDecoration: 'none',
+                fontSize: 16,
+                display: 'flex',
+                alignItems: 'center',
+                height: 44,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.10)',
+                border: '1px solid #23232b',
+                cursor: 'pointer'
+              }}
+                onMouseOver={e => e.currentTarget.style.background = '#23232b'}
+                onMouseOut={e => e.currentTarget.style.background = 'rgba(36,36,36,0.7)'}
+              >Profile</a>
+            </Link>
             {isAdmin && (
-              <Menu.Item key="admin" icon={<SettingOutlined />}>
-                <Link href="/admin">Admin</Link>
-              </Menu.Item>
+              <Link href="/admin" legacyBehavior>
+                <a style={{
+                  color: '#fff',
+                  fontWeight: 500,
+                  padding: '8px 28px',
+                  borderRadius: 12,
+                  background: 'rgba(36,36,36,0.7)',
+                  transition: 'background 0.2s, color 0.2s',
+                  textDecoration: 'none',
+                  fontSize: 16,
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: 44,
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.10)',
+                  border: '1px solid #23232b',
+                  cursor: 'pointer'
+                }}
+                  onMouseOver={e => e.currentTarget.style.background = '#23232b'}
+                  onMouseOut={e => e.currentTarget.style.background = 'rgba(36,36,36,0.7)'}
+                >Admin</a>
+              </Link>
             )}
-          </Menu>
+          </nav>
         </div>
-        <Button
-          type="primary"
-          danger
-          icon={<LogoutOutlined />}
-          href="/api/auth/logout"
-        >
+        <Button type="primary" danger icon={<LogoutOutlined />} href="/api/auth/logout" style={{ borderRadius: 10, fontWeight: 500, height: 40, fontSize: 15, boxShadow: '0 1px 6px rgba(255,0,0,0.10)' }}>
           Sign Out
         </Button>
       </Header>
 
-      <Content style={{ padding: '24px', maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
+      <Content style={{ padding: '24px', margin: '0 auto', width: '100%', maxWidth: '1520px', }}>
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} lg={6}>
             <Card>
